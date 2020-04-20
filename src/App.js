@@ -25,7 +25,7 @@ class App extends Component {
     try {
       const { data } = await getCountries(search);
 
-      const parsedCountries = data.map((country) => country.name);
+      // const parsedCountries = data.map((country) => country.name);
 
       this.setState({
         options: data,
