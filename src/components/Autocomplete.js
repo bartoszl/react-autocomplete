@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import AutoInput from './AutoInput';
 import Options from './Options';
+import AutocompleteWrapper from './AutocompleteWrapper';
+
+const Label = styled.label`
+  padding-bottom: 0.5rem;
+  display: block;
+`;
 
 class Autocomplete extends Component {
   constructor(props) {
@@ -15,6 +22,7 @@ class Autocomplete extends Component {
     this.handleAutocompleteChange = this.handleAutocompleteChange.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
     this.handleClear = this.handleClear.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
 
   handleAutocompleteChange(e) {
@@ -51,12 +59,23 @@ class Autocomplete extends Component {
     onSelect(value);
   }
 
+  handleClose() {
+    this.setState({
+      isOpen: false,
+    });
+  }
+
   render() {
-    const { options, placeholder } = this.props;
+    const { options, placeholder, label } = this.props;
     const { autocompleteValue, isOpen } = this.state;
 
     return (
-      <>
+      <AutocompleteWrapper onClickOutside={this.handleClose}>
+        { label && (
+        <Label>
+          { label }
+        </Label>
+        ) }
         <AutoInput
           name="autocomplete"
           value={autocompleteValue}
@@ -66,7 +85,7 @@ class Autocomplete extends Component {
           placeholder={placeholder}
         />
         <Options options={options} onSelect={this.handleSelect} isOpen={isOpen} />
-      </>
+      </AutocompleteWrapper>
     );
   }
 }
@@ -76,10 +95,12 @@ Autocomplete.propTypes = {
   onSelect: PropTypes.func.isRequired,
   options: PropTypes.array.isRequired,
   placeholder: PropTypes.string,
+  label: PropTypes.string,
 };
 
 Autocomplete.defaultProps = {
   placeholder: 'Search...',
+  label: null,
 };
 
 

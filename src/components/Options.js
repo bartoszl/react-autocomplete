@@ -1,31 +1,36 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import Option from './Option';
 
-class Options extends Component {
-  render() {
-    const { options, onSelect, isOpen } = this.props;
+const OptionsList = styled.ul`
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border: 1px solid #888;
+`;
 
-    if (!isOpen) {
-      return null;
-    }
+const Options = ({ options, onSelect, isOpen }) => {
+  if (!isOpen) {
+    return null;
+  }
 
-    if (!options || !options.length) {
-      return 'No results were found.';
-    }
-
+  if (!options || !options.length) {
     return (
-      <ul>
-        { options.map((option) => (
-          <li key={option}>
-            <button onClick={() => onSelect(option)} type="button">
-              { option }
-            </button>
-          </li>
-        ))}
-      </ul>
+      <OptionsList>
+        No results were found.
+      </OptionsList>
     );
   }
-}
+
+  return (
+    <OptionsList>
+      { options.map((option) => (
+        <Option key={option} onClick={() => onSelect(option)} option={option} />
+      ))}
+    </OptionsList>
+  );
+};
 
 Options.propTypes = {
   onSelect: PropTypes.func.isRequired,

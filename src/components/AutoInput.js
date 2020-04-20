@@ -1,29 +1,24 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const ClearBtn = styled.button.attrs(() => ({
+const PADDING_VERTICAL = '0.5rem';
+const PADDING_HORIZONTAL = '1rem';
+const FONT_SIZE = '0.8rem';
+
+const ClearButton = styled.button.attrs(() => ({
   type: 'button',
 }))`
+  display: ${({ value }) => (!value ? 'none' : 'flex')};
   position: absolute;
-  top: 0;
-  right: 0;
+  top: ${PADDING_VERTICAL};
+  right: ${PADDING_HORIZONTAL};
   border: none;
   color: red;
-
-  &:hover {
-
-  }
+  background-color: transparent;
+  padding: 0;
+  font-size: ${FONT_SIZE};
+  justify-content: flex-start;
 `;
-
-function ClearButton({ value, onClear }) {
-  if (!value) {
-    return null;
-  }
-
-  return (
-    <ClearBtn onClick={onClear}> x </ClearBtn>
-  );
-}
 
 const Wrapper = styled.div`
   position: relative;
@@ -32,10 +27,20 @@ const Wrapper = styled.div`
 
 const Input = styled.input`
   width: 100%;
+  box-sizing: border-box; 
+  padding: ${PADDING_VERTICAL} ${PADDING_HORIZONTAL};
+  border-radius: 3px;
+  border: 1px solid #888;
+  font-size: ${FONT_SIZE};
+
+  &:focus {
+    outline: none;
+    border-color: blue;
+  }
 `;
 
 export default function AutoInput({
-  value, onChange, name, placeholder,
+  value, onChange, name, placeholder, onClear,
 }) {
   return (
     <Wrapper>
@@ -46,7 +51,9 @@ export default function AutoInput({
         onChange={onChange}
         placeholder={placeholder}
       />
-      <ClearButton value={value} onClear={() => console.log('clear')} />
+      <ClearButton value={value} onClick={onClear}>
+        &times;
+      </ClearButton>
     </Wrapper>
   );
 }
