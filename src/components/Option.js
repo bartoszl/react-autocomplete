@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -23,10 +23,12 @@ const Highlight = styled.span`
   color: green;
 `;
 
-const Option = ({
-  onClick, option, highlightMatch, value, active,
-}) => {
-  const renderOption = () => {
+class Option extends Component {
+  renderOption() {
+    const {
+      highlightMatch, option, value,
+    } = this.props;
+
     if (highlightMatch) {
       const split = option.split(new RegExp(`(${value})`, 'gi'));
 
@@ -40,16 +42,20 @@ const Option = ({
     }
 
     return option;
-  };
+  }
 
-  return (
-    <OptionItem>
-      <OptionItemInner onClick={() => onClick(option)} type="button" active={active}>
-        { renderOption() }
-      </OptionItemInner>
-    </OptionItem>
-  );
-};
+  render() {
+    const { onClick, option, active } = this.props;
+
+    return (
+      <OptionItem>
+        <OptionItemInner onClick={() => onClick(option)} type="button" active={active}>
+          { this.renderOption() }
+        </OptionItemInner>
+      </OptionItem>
+    );
+  }
+}
 
 Option.propTypes = {
   onClick: PropTypes.func.isRequired,

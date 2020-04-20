@@ -50,7 +50,7 @@ class App extends Component {
       <Wrapper>
         <div style={{ marginBottom: '4rem' }}>
           Selected value:
-          {value}
+          { value }
         </div>
         <Autocomplete
           onSearch={this.handleSearch}
