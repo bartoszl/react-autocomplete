@@ -22,7 +22,7 @@ class Autocomplete extends Component {
     this.state = {
       autocompleteValue: '',
       isOpen: false,
-      pointer: 0,
+      pointer: -1,
     };
 
     this.handleAutocompleteChange = this.handleAutocompleteChange.bind(this);

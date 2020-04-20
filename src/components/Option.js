@@ -54,6 +54,7 @@ const Option = ({
 Option.propTypes = {
   onClick: PropTypes.func.isRequired,
   option: PropTypes.string.isRequired,
+  active: PropTypes.bool,
   value: PropTypes.string,
   highlightMatch: PropTypes.bool,
 };
@@ -61,6 +62,7 @@ Option.propTypes = {
 Option.defaultProps = {
   highlightMatch: false,
   value: null,
+  active: false,
 };
 
 export default Option;
