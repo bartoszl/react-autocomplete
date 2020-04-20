@@ -59,6 +59,7 @@ class App extends Component {
           placeholder="Name a country..."
           label="Country search: "
           onSelect={this.handleSelect}
+          highlightMatch
         />
 
       </Wrapper>

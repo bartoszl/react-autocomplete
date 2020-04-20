@@ -11,13 +11,15 @@ const ClearButton = styled.button.attrs(() => ({
   display: ${({ value }) => (!value ? 'none' : 'flex')};
   position: absolute;
   top: ${PADDING_VERTICAL};
-  right: ${PADDING_HORIZONTAL};
+  right: 0;
   border: none;
   color: red;
   background-color: transparent;
   padding: 0;
   font-size: ${FONT_SIZE};
   justify-content: flex-start;
+  cursor: pointer;
+  padding: 0 ${PADDING_VERTICAL};
 `;
 
 const Wrapper = styled.div`

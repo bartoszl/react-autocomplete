@@ -66,7 +66,9 @@ class Autocomplete extends Component {
   }
 
   render() {
-    const { options, placeholder, label } = this.props;
+    const {
+      options, placeholder, label, highlightMatch,
+    } = this.props;
     const { autocompleteValue, isOpen } = this.state;
 
     return (
@@ -84,7 +86,13 @@ class Autocomplete extends Component {
           onClear={this.handleClear}
           placeholder={placeholder}
         />
-        <Options options={options} onSelect={this.handleSelect} isOpen={isOpen} />
+        <Options
+          options={options}
+          onSelect={this.handleSelect}
+          isOpen={isOpen}
+          highlightMatch={highlightMatch}
+          value={autocompleteValue}
+        />
       </AutocompleteWrapper>
     );
   }
@@ -96,11 +104,13 @@ Autocomplete.propTypes = {
   options: PropTypes.array.isRequired,
   placeholder: PropTypes.string,
   label: PropTypes.string,
+  highlightMatch: PropTypes.bool,
 };
 
 Autocomplete.defaultProps = {
   placeholder: 'Search...',
   label: null,
+  highlightMatch: false,
 };
 
 

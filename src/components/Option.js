@@ -19,17 +19,48 @@ const OptionItemInner = styled.button`
   }
 `;
 
-const Option = ({ onClick, option }) => (
-  <OptionItem>
-    <OptionItemInner onClick={() => onClick(option)} type="button">
-      { option }
-    </OptionItemInner>
-  </OptionItem>
-);
+const Highlight = styled.span`
+  color: green;
+`;
+
+const Option = ({
+  onClick, option, highlightMatch, value,
+}) => {
+  const renderOption = () => {
+    if (highlightMatch) {
+      const split = option.split(new RegExp(`(${value})`, 'gi'));
+
+      return (
+        <span>
+          {split.map((part) => (part.toLowerCase() === value.toLowerCase()
+            ? <Highlight>{part}</Highlight>
+            : part))}
+        </span>
+      );
+    }
+
+    return option;
+  };
+
+  return (
+    <OptionItem>
+      <OptionItemInner onClick={() => onClick(option)} type="button">
+        { renderOption() }
+      </OptionItemInner>
+    </OptionItem>
+  );
+};
 
 Option.propTypes = {
   onClick: PropTypes.func.isRequired,
   option: PropTypes.string.isRequired,
+  value: PropTypes.string,
+  highlightMatch: PropTypes.bool,
+};
+
+Option.defaultProps = {
+  highlightMatch: false,
+  value: null,
 };
 
 export default Option;

@@ -10,7 +10,9 @@ const OptionsList = styled.ul`
   border: 1px solid #888;
 `;
 
-const Options = ({ options, onSelect, isOpen }) => {
+const Options = ({
+  options, onSelect, isOpen, highlightMatch, value,
+}) => {
   if (!isOpen) {
     return null;
   }
@@ -26,7 +28,13 @@ const Options = ({ options, onSelect, isOpen }) => {
   return (
     <OptionsList>
       { options.map((option) => (
-        <Option key={option} onClick={() => onSelect(option)} option={option} />
+        <Option
+          key={option}
+          onClick={() => onSelect(option)}
+          option={option}
+          highlightMatch={highlightMatch}
+          value={value}
+        />
       ))}
     </OptionsList>
   );
@@ -34,6 +42,7 @@ const Options = ({ options, onSelect, isOpen }) => {
 
 Options.propTypes = {
   onSelect: PropTypes.func.isRequired,
+  highlightMatch: PropTypes.bool,
   isOpen: PropTypes.bool,
   options: PropTypes.array,
 };
@@ -41,6 +50,7 @@ Options.propTypes = {
 Options.defaultProps = {
   isOpen: false,
   options: null,
+  highlightMatch: false,
 };
 
 export default Options;
