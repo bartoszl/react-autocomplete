@@ -56,10 +56,12 @@ class Autocomplete extends Component {
   }
 
   handleSelect(value) {
-    const { onSelect } = this.props;
+    const { onSelect, accessor } = this.props;
+
+    const autocompleteValue = typeof value === 'object' ? value[accessor] : value;
 
     this.setState({
-      autocompleteValue: value,
+      autocompleteValue,
       isOpen: false,
     });
 
@@ -99,7 +101,7 @@ class Autocomplete extends Component {
 
   render() {
     const {
-      options, placeholder, label, highlightMatch, name,
+      options, placeholder, label, highlightMatch, name, accessor,
     } = this.props;
     const { autocompleteValue, isOpen, pointer } = this.state;
 
@@ -113,7 +115,6 @@ class Autocomplete extends Component {
         <AutoInput
           name={name}
           value={autocompleteValue}
-          options={options}
           onChange={this.handleAutocompleteChange}
           onClear={this.handleClear}
           placeholder={placeholder}
@@ -126,6 +127,7 @@ class Autocomplete extends Component {
           highlightMatch={highlightMatch}
           value={autocompleteValue}
           activeIndex={pointer}
+          accessor={accessor}
         />
       </AutocompleteWrapper>
     );
@@ -140,12 +142,14 @@ Autocomplete.propTypes = {
   placeholder: PropTypes.string,
   label: PropTypes.string,
   highlightMatch: PropTypes.bool,
+  accessor: PropTypes.string,
 };
 
 Autocomplete.defaultProps = {
   placeholder: 'Search...',
   label: null,
   highlightMatch: false,
+  accessor: 'id',
 };
 
 

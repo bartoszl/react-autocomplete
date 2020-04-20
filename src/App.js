@@ -28,7 +28,7 @@ class App extends Component {
       const parsedCountries = data.map((country) => country.name);
 
       this.setState({
-        options: parsedCountries,
+        options: data,
       });
     } catch (err) {
       this.setState({
@@ -50,7 +50,7 @@ class App extends Component {
       <Wrapper>
         <div style={{ marginBottom: '4rem' }}>
           Selected value:
-          { value }
+          { typeof value === 'object' ? JSON.stringify(value) : value }
         </div>
         <Autocomplete
           onSearch={this.handleSearch}
@@ -60,6 +60,7 @@ class App extends Component {
           onSelect={this.handleSelect}
           name="autocomplete"
           highlightMatch
+          accessor="name"
         />
 
       </Wrapper>

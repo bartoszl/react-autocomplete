@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Option from './Option';
@@ -18,38 +18,46 @@ const NoResults = styled.div`
   font-size: 0.8rem;
 `;
 
-const Options = ({
-  options, onSelect, isOpen, highlightMatch, value, noResultsText, activeIndex,
-}) => {
-  if (!isOpen) {
-    return null;
-  }
+class Options extends Component {
+  render() {
+    const {
+      options, onSelect, isOpen, highlightMatch, value, noResultsText, activeIndex, accessor,
+    } = this.props;
 
-  if (!options || !options.length) {
+    if (!isOpen) {
+      return null;
+    }
+
+    if (!options || !options.length) {
+      return (
+        <OptionsList>
+          <NoResults>
+            { noResultsText }
+          </NoResults>
+        </OptionsList>
+      );
+    }
+
     return (
       <OptionsList>
-        <NoResults>
-          { noResultsText }
-        </NoResults>
+        { options.map((option, i) => {
+          const parsedOption = typeof option === 'object' ? option[accessor] : option;
+
+          return (
+            <Option
+              key={parsedOption}
+              onClick={() => onSelect(option)}
+              option={parsedOption}
+              highlightMatch={highlightMatch}
+              value={value}
+              active={activeIndex === i}
+            />
+          );
+        })}
       </OptionsList>
     );
   }
-
-  return (
-    <OptionsList>
-      { options.map((option, i) => (
-        <Option
-          key={option}
-          onClick={() => onSelect(option)}
-          option={option}
-          highlightMatch={highlightMatch}
-          value={value}
-          active={activeIndex === i}
-        />
-      ))}
-    </OptionsList>
-  );
-};
+}
 
 Options.propTypes = {
   onSelect: PropTypes.func.isRequired,

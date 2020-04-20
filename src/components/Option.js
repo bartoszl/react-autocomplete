@@ -45,11 +45,11 @@ class Option extends Component {
   }
 
   render() {
-    const { onClick, option, active } = this.props;
+    const { onClick, active } = this.props;
 
     return (
       <OptionItem>
-        <OptionItemInner onClick={() => onClick(option)} type="button" active={active}>
+        <OptionItemInner onClick={onClick} type="button" active={active}>
           { this.renderOption() }
         </OptionItemInner>
       </OptionItem>
