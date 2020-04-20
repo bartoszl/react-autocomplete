@@ -42,7 +42,7 @@ const Input = styled.input`
 `;
 
 export default function AutoInput({
-  value, onChange, name, placeholder, onClear,
+  value, onChange, name, placeholder, onClear, onKeyDown,
 }) {
   return (
     <Wrapper>
@@ -52,6 +52,7 @@ export default function AutoInput({
         value={value}
         onChange={onChange}
         placeholder={placeholder}
+        onKeyDown={onKeyDown}
       />
       <ClearButton value={value} onClick={onClear}>
         &times;

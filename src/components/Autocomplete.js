@@ -9,6 +9,11 @@ const Label = styled.label`
   padding-bottom: 0.5rem;
   display: block;
 `;
+const KEYS = {
+  UP_ARROW: 38,
+  DOWN_ARROW: 40,
+  ENTER: 13,
+};
 
 class Autocomplete extends Component {
   constructor(props) {
@@ -17,12 +22,14 @@ class Autocomplete extends Component {
     this.state = {
       autocompleteValue: '',
       isOpen: false,
+      pointer: 0,
     };
 
     this.handleAutocompleteChange = this.handleAutocompleteChange.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
     this.handleClear = this.handleClear.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
   }
 
   handleAutocompleteChange(e) {
@@ -62,14 +69,39 @@ class Autocomplete extends Component {
   handleClose() {
     this.setState({
       isOpen: false,
+      pointer: -1,
     });
+  }
+
+  handleKeyDown(e) {
+    const { options } = this.props;
+    const { pointer } = this.state;
+
+    if (e.keyCode === KEYS.UP_ARROW) {
+      e.preventDefault();
+      let newPointer = pointer - 1;
+      if (newPointer < 0) {
+        newPointer += options.length;
+      }
+      this.setState({
+        pointer: newPointer,
+      });
+    } else if (e.keyCode === KEYS.DOWN_ARROW) {
+      e.preventDefault();
+      this.setState({
+        pointer: (pointer + 1) % options.length,
+      });
+    } else if (e.keyCode === KEYS.ENTER && pointer !== -1) {
+      e.preventDefault();
+      this.handleSelect(options[pointer]);
+    }
   }
 
   render() {
     const {
-      options, placeholder, label, highlightMatch,
+      options, placeholder, label, highlightMatch, name,
     } = this.props;
-    const { autocompleteValue, isOpen } = this.state;
+    const { autocompleteValue, isOpen, pointer } = this.state;
 
     return (
       <AutocompleteWrapper onClickOutside={this.handleClose}>
@@ -79,12 +111,13 @@ class Autocomplete extends Component {
         </Label>
         ) }
         <AutoInput
-          name="autocomplete"
+          name={name}
           value={autocompleteValue}
           options={options}
           onChange={this.handleAutocompleteChange}
           onClear={this.handleClear}
           placeholder={placeholder}
+          onKeyDown={this.handleKeyDown}
         />
         <Options
           options={options}
@@ -92,6 +125,7 @@ class Autocomplete extends Component {
           isOpen={isOpen}
           highlightMatch={highlightMatch}
           value={autocompleteValue}
+          activeIndex={pointer}
         />
       </AutocompleteWrapper>
     );
@@ -102,6 +136,7 @@ Autocomplete.propTypes = {
   onSearch: PropTypes.func.isRequired,
   onSelect: PropTypes.func.isRequired,
   options: PropTypes.array.isRequired,
+  name: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   label: PropTypes.string,
   highlightMatch: PropTypes.bool,

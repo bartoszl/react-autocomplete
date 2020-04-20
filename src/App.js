@@ -50,7 +50,6 @@ class App extends Component {
       <Wrapper>
         <div style={{ marginBottom: '4rem' }}>
           Selected value:
-          {' '}
           {value}
         </div>
         <Autocomplete
@@ -59,6 +58,7 @@ class App extends Component {
           placeholder="Name a country..."
           label="Country search: "
           onSelect={this.handleSelect}
+          name="autocomplete"
           highlightMatch
         />
 

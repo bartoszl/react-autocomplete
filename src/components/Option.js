@@ -8,7 +8,7 @@ const OptionItem = styled.li`
 
 const OptionItemInner = styled.button`
   padding: 0.5rem 1rem;
-  background-color: white;
+  background-color: ${({ active }) => (active ? '#bbb' : 'white')};
   border: none;
   width: 100%;
   text-align: left;
@@ -24,7 +24,7 @@ const Highlight = styled.span`
 `;
 
 const Option = ({
-  onClick, option, highlightMatch, value,
+  onClick, option, highlightMatch, value, active,
 }) => {
   const renderOption = () => {
     if (highlightMatch) {
@@ -44,7 +44,7 @@ const Option = ({
 
   return (
     <OptionItem>
-      <OptionItemInner onClick={() => onClick(option)} type="button">
+      <OptionItemInner onClick={() => onClick(option)} type="button" active={active}>
         { renderOption() }
       </OptionItemInner>
     </OptionItem>
