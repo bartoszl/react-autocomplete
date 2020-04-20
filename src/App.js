@@ -4,7 +4,7 @@ import Autocomplete from './components/Autocomplete';
 import { getCountries } from './helpers';
 
 const Wrapper = styled.div`
-  width: 25%;
+  width: 30%;
   margin: 5rem auto;
 `;
 
