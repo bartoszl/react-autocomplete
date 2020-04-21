@@ -15,6 +15,7 @@ class App extends Component {
     this.state = {
       options: [],
       value: null,
+      loading: false,
     };
 
     this.handleSearch = this.handleSearch.bind(this);
@@ -22,19 +23,25 @@ class App extends Component {
   }
 
   async handleSearch(search) {
-    try {
-      const { data } = await getCountries(search);
+    this.setState({
+      loading: true,
+    }, async () => {
+      try {
+        const { data } = await getCountries(search);
 
-      const parsedCountries = data.map((country) => country.name);
+        const parsedCountries = data.map((country) => country.name);
 
-      this.setState({
-        options: parsedCountries,
-      });
-    } catch (err) {
-      this.setState({
-        options: [],
-      });
-    }
+        this.setState({
+          options: parsedCountries,
+          loading: false,
+        });
+      } catch (err) {
+        this.setState({
+          options: [],
+          loading: false,
+        });
+      }
+    });
   }
 
   handleSelect(value) {
@@ -44,7 +51,7 @@ class App extends Component {
   }
 
   render() {
-    const { options, value } = this.state;
+    const { options, value, loading } = this.state;
 
     return (
       <Wrapper>
@@ -61,6 +68,7 @@ class App extends Component {
           name="autocomplete"
           highlightMatch
           accessor="name"
+          loading={loading}
         />
       </Wrapper>
     );
