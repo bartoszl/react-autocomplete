@@ -30,7 +30,7 @@ class Options extends Component {
 
     if (!options || !options.length) {
       return (
-        <OptionsList>
+        <OptionsList data-testid="autocomplete-no-options">
           <NoResults>
             { noResultsText }
           </NoResults>
@@ -39,7 +39,7 @@ class Options extends Component {
     }
 
     return (
-      <OptionsList>
+      <OptionsList data-testid="autocomplete-options-list">
         { options.map((option, i) => {
           const parsedOption = typeof option === 'object' ? option[accessor] : option;
 

@@ -9,7 +9,6 @@ const FONT_SIZE = '0.8rem';
 const ClearButton = styled.button.attrs(() => ({
   type: 'button',
 }))`
-  display: ${({ value }) => (!value ? 'none' : 'block')};
   position: absolute;
   top: ${PADDING_VERTICAL};
   right: 0;
@@ -56,10 +55,13 @@ class AutoInput extends Component {
           onChange={onChange}
           placeholder={placeholder}
           onKeyDown={onKeyDown}
+          data-testid="autocomplete-input"
         />
-        <ClearButton value={value} onClick={onClear}>
-          &times;
-        </ClearButton>
+        { value && (
+          <ClearButton onClick={onClear} data-testid="clear-button">
+            &times;
+          </ClearButton>
+        )}
       </Wrapper>
     );
   }
