@@ -1,8 +1,8 @@
 import React from 'react';
 import {
-  render, fireEvent, waitFor, screen,
+  render, fireEvent, screen,
 } from '@testing-library/react';
-import Autocomplete from './components/Autocomplete';
+import Autocomplete from './Autocomplete';
 
 const setup = ({ options, noResultsText }) => {
   const onSelect = jest.fn();
