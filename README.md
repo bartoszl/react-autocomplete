@@ -62,7 +62,7 @@ const handleSearch = (text) => {
 }
 
 const handleSelect = (value) => {
-  // value will be the whole selected object
+  // value will be the option string
   ...
 }
 
