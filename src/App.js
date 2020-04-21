@@ -62,7 +62,6 @@ class App extends Component {
           highlightMatch
           accessor="name"
         />
-
       </Wrapper>
     );
   }

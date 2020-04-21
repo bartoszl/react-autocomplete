@@ -101,7 +101,7 @@ class Autocomplete extends Component {
 
   render() {
     const {
-      options, placeholder, label, highlightMatch, name, accessor, noResultsText,
+      options, placeholder, label, highlightMatch, name, accessor, noResultsText, loading,
     } = this.props;
     const { autocompleteValue, isOpen, pointer } = this.state;
 
@@ -129,6 +129,7 @@ class Autocomplete extends Component {
           activeIndex={pointer}
           accessor={accessor}
           noResultsText={noResultsText}
+          loading={loading}
         />
       </AutocompleteWrapper>
     );
@@ -145,6 +146,7 @@ Autocomplete.propTypes = {
   highlightMatch: PropTypes.bool,
   accessor: PropTypes.string,
   noResultsText: PropTypes.string,
+  loading: PropTypes.bool,
 };
 
 Autocomplete.defaultProps = {
@@ -153,6 +155,7 @@ Autocomplete.defaultProps = {
   highlightMatch: false,
   accessor: 'id',
   noResultsText: undefined,
+  loading: false,
 };
 
 

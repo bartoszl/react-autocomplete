@@ -13,7 +13,7 @@ const OptionsList = styled.ul`
   overflow: scroll;
 `;
 
-const NoResults = styled.div`
+const OptionsTextContainer = styled.div`
   padding: 0.5rem 1rem;
   font-size: 0.8rem;
 `;
@@ -21,19 +21,29 @@ const NoResults = styled.div`
 class Options extends Component {
   render() {
     const {
-      options, onSelect, isOpen, highlightMatch, value, noResultsText, activeIndex, accessor,
+      options, onSelect, isOpen, highlightMatch, value, noResultsText, activeIndex, accessor, loading,
     } = this.props;
 
     if (!isOpen) {
       return null;
     }
 
+    if (loading) {
+      return (
+        <OptionsList data-testid="autocomplete-loading-options">
+          <OptionsTextContainer>
+            Loading...
+          </OptionsTextContainer>
+        </OptionsList>
+      );
+    }
+
     if (!options || !options.length) {
       return (
         <OptionsList data-testid="autocomplete-no-options">
-          <NoResults>
+          <OptionsTextContainer>
             { noResultsText }
-          </NoResults>
+          </OptionsTextContainer>
         </OptionsList>
       );
     }
@@ -67,6 +77,8 @@ Options.propTypes = {
   noResultsText: PropTypes.string,
   value: PropTypes.string,
   activeIndex: PropTypes.number,
+  accessor: PropTypes.string,
+  loading: PropTypes.bool,
 };
 
 Options.defaultProps = {
@@ -76,6 +88,8 @@ Options.defaultProps = {
   noResultsText: 'No results were found.',
   value: null,
   activeIndex: null,
+  accessor: 'id',
+  loading: false,
 };
 
 export default Options;
