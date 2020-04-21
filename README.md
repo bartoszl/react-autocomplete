@@ -37,6 +37,7 @@ Autocomplete.propTypes = {
   accessor: PropTypes.string,
   /* Text to be displayed if no options matching search phrase were found */
   noResultsText: PropTypes.string,
+  loading: PropTypes.bool,
 };
 
 Autocomplete.defaultProps = {
@@ -45,6 +46,7 @@ Autocomplete.defaultProps = {
   highlightMatch: false,
   accessor: 'id',
   noResultsText: undefined,
+  loading: false,
 };
 ```
 
